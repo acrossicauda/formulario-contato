@@ -91,9 +91,9 @@ jobs:
       run: sed -i "s/APP_DEBUG={APP_DEBUG}/APP_DEBUG=true/g" .env
       working-directory: ./form-contato
 
-    - name: Trocar valor APP_NAME
-      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME="Formulario de Contato"/g" .env
-      working-directory: ./form-contato
+#    - name: Trocar valor APP_NAME
+#      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME="Formulario de Contato"/g" .env
+#      working-directory: ./form-contato
 
 
     - name: Gerando KEY do LARAVEL
