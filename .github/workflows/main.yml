@@ -33,59 +33,59 @@ jobs:
 
       - name: Instalar dependências do Node.js
         run: npm install
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Instalar dependências do Composer
         run: composer install
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
 
       - name: Copiar e ajustar o arquivo .env
         run: cp .env.ci .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
 
       - name: Do Something with env files
         run: echo "DB_USERNAME=${{ secrets.DB_USER }}" >> .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor DB_HOST
         run: sed -i "s/DB_HOST={DB_HOST}/DB_HOST=${{ secrets.DB_HOST }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor DB_DATBASE_PRD
         run: sed -i "s/DB_USERNAME={DB_DATABASE}/DB_DATABASE=${{ secrets.DB_DATBASE_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor DB_USERNAME
         run: sed -i "s/DB_USERNAME={DB_USERNAME}/DB_USERNAME=${{ secrets.DB_USER }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor DB_PASSWORD
         run: sed -i "s/DB_PASSWORD={DB_PASSWORD}/DB_PASSWORD=${{ secrets.DB_PASS }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor DB_DATABASE
         run: sed -i "s/DB_DATABASE={DB_DATABASE}/DB_DATABASE=${{ secrets.DB_DATABASE_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor APP_DEBUG
         run: sed -i "s/APP_DEBUG={APP_DEBUG}/APP_DEBUG=false/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor APP_NAME
         run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME="Formulario de Contato"/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
 
       - name: Gerando KEY do LARAVEL
         run: php artisan key:generate
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Verify MySQL connection
         run: |
           mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Execute PHPUnit tests
         env:
@@ -100,15 +100,15 @@ jobs:
 
         #    - name: Execute Testes (Unit and Feature tests) via PHPUnit
       #      run: vendor/bin/phpunit
-      #      working-directory: ./formulario-contato
+      #      working-directory: ./form-contato
 
       #    - name: Rodando migrations
       #      run: php artisan migrate
-      #      working-directory: ./formulario-contato
+      #      working-directory: ./form-contato
 
       - name: Rodando Storage Link
         run: php artisan storage:link
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       # CONFIGURACAO EMAIL
       #    MAIL_MAILER
@@ -119,27 +119,27 @@ jobs:
       #    MAIL_ENCRYPTION
       - name: Trocar valor MAIL_MAILER
         run: sed -i "s/MAIL_MAILER={MAIL_MAILER}/MAIL_MAILER=${{ secrets.MAIL_MAILER_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor MAIL_HOST
         run: sed -i "s/MAIL_HOST={MAIL_HOST}/MAIL_HOST=${{ secrets.MAIL_HOST_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor MAIL_PORT
         run: sed -i "s/MAIL_PORT={MAIL_PORT}/MAIL_PORT=${{ secrets.MAIL_PORT_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor MAIL_USERNAME
         run: sed -i "s/MAIL_USERNAME={MAIL_USERNAME}/MAIL_USERNAME=${{ secrets.MAIL_USERNAME_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor MAIL_PASSWORD
         run: sed -i "s/MAIL_PASSWORD={MAIL_PASSWORD}/MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
       - name: Trocar valor MAIL_ENCRYPTION
         run: sed -i "s/MAIL_ENCRYPTION={MAIL_ENCRYPTION}/MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION_PRD }}/g" .env
-        working-directory: ./formulario-contato
+        working-directory: ./form-contato
 
 
       - name: Deploy via FTP
