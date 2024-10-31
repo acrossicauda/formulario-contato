@@ -1,0 +1,152 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+  services:
+    mysql:
+      image: mysql:5.7
+      env:
+        MYSQL_USER:
+          MYSQL_PASSWORD: ${{ secrets.DB_PASS }}
+          MYSQL_DATABASE: ${{ secrets.DB_DATABASE_PRD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASS }}
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          ports:
+            - 33306:3306
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar ambiente PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, intl
+
+      - name: Instalar dependências do Node.js
+        run: npm install
+        working-directory: ./formulario-contato
+
+      - name: Instalar dependências do Composer
+        run: composer install
+        working-directory: ./formulario-contato
+
+
+      - name: Copiar e ajustar o arquivo .env
+        run: cp .env.ci .env
+        working-directory: ./formulario-contato
+
+
+      - name: Do Something with env files
+        run: echo "DB_USERNAME=${{ secrets.DB_USER }}" >> .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor DB_HOST
+        run: sed -i "s/DB_HOST={DB_HOST}/DB_HOST=${{ secrets.DB_HOST }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor DB_DATBASE_PRD
+        run: sed -i "s/DB_USERNAME={DB_DATABASE}/DB_DATABASE=${{ secrets.DB_DATBASE_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor DB_USERNAME
+        run: sed -i "s/DB_USERNAME={DB_USERNAME}/DB_USERNAME=${{ secrets.DB_USER }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor DB_PASSWORD
+        run: sed -i "s/DB_PASSWORD={DB_PASSWORD}/DB_PASSWORD=${{ secrets.DB_PASS }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor DB_DATABASE
+        run: sed -i "s/DB_DATABASE={DB_DATABASE}/DB_DATABASE=${{ secrets.DB_DATABASE_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor APP_DEBUG
+        run: sed -i "s/APP_DEBUG={APP_DEBUG}/APP_DEBUG=false/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor APP_NAME
+        run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME="Formulario de Contato"/g" .env
+        working-directory: ./formulario-contato
+
+
+      - name: Gerando KEY do LARAVEL
+        run: php artisan key:generate
+        working-directory: ./formulario-contato
+
+      - name: Verify MySQL connection
+        run: |
+          mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
+        working-directory: ./formulario-contato
+
+      - name: Execute PHPUnit tests
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: ${{ secrets.DB_DATABASE_PRD }}
+          DB_PORT: 3306
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASS }}
+        run: |
+          php artisan migrate --seed
+        #        ./vendor/bin/phpunit
+
+        #    - name: Execute Testes (Unit and Feature tests) via PHPUnit
+      #      run: vendor/bin/phpunit
+      #      working-directory: ./formulario-contato
+
+      #    - name: Rodando migrations
+      #      run: php artisan migrate
+      #      working-directory: ./formulario-contato
+
+      - name: Rodando Storage Link
+        run: php artisan storage:link
+        working-directory: ./formulario-contato
+
+      # CONFIGURACAO EMAIL
+      #    MAIL_MAILER
+      #    MAIL_HOST
+      #    MAIL_PORT
+      #    MAIL_USERNAME
+      #    MAIL_PASSWORD
+      #    MAIL_ENCRYPTION
+      - name: Trocar valor MAIL_MAILER
+        run: sed -i "s/MAIL_MAILER={MAIL_MAILER}/MAIL_MAILER=${{ secrets.MAIL_MAILER_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor MAIL_HOST
+        run: sed -i "s/MAIL_HOST={MAIL_HOST}/MAIL_HOST=${{ secrets.MAIL_HOST_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor MAIL_PORT
+        run: sed -i "s/MAIL_PORT={MAIL_PORT}/MAIL_PORT=${{ secrets.MAIL_PORT_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor MAIL_USERNAME
+        run: sed -i "s/MAIL_USERNAME={MAIL_USERNAME}/MAIL_USERNAME=${{ secrets.MAIL_USERNAME_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor MAIL_PASSWORD
+        run: sed -i "s/MAIL_PASSWORD={MAIL_PASSWORD}/MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+      - name: Trocar valor MAIL_ENCRYPTION
+        run: sed -i "s/MAIL_ENCRYPTION={MAIL_ENCRYPTION}/MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION_PRD }}/g" .env
+        working-directory: ./formulario-contato
+
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.ftp_host_PRD }}
+          username: ${{ secrets.ftp_user_PRD }}
+          password: ${{ secrets.ftp_password_PRD }}
+          server-dir: github/stage/
+
