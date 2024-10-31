@@ -23,10 +23,10 @@ jobs:
 
     steps:
     - name: Checkout código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Configurar ambiente PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
         extensions: mbstring, intl
