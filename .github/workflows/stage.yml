@@ -30,8 +30,8 @@ jobs:
       with:
         php-version: '8.1'
         extensions: mbstring, intl
-      env:
-        debug: true # specify true or false
+#      env:
+#        debug: true # specify true or false
 
     - name: Instalar dependências do Node.js
       run: npm install
@@ -84,21 +84,22 @@ jobs:
       run: php artisan key:generate
       working-directory: ./form-contato
 
-    - name: Verify MySQL connection
-      run: |
-        mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
-      working-directory: ./form-contato
+#    - name: Verify MySQL connection
+#      run: |
+#        mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
+#      working-directory: ./form-contato
 
     - name: Execute PHPUnit tests
-      env:
-        DB_CONNECTION: mysql
-        DB_DATABASE: ${{ secrets.DB_DATABASE_DEV }}
-        DB_PORT: 3306
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASS }}
-      run: |
-        php artisan migrate --seed
+#      env:
+#        DB_CONNECTION: mysql
+#        DB_DATABASE: ${{ secrets.DB_DATABASE_DEV }}
+#        DB_PORT: 3306
+#        DB_USER: ${{ secrets.DB_USER }}
+#        DB_PASSWORD: ${{ secrets.DB_PASS }}
+      run: php artisan migrate --seed
 #        ./vendor/bin/phpunit
+      working-directory: ./form-contato
+
 
       #    - name: Execute Testes (Unit and Feature tests) via PHPUnit
 #      run: vendor/bin/phpunit
