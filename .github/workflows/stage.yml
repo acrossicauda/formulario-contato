@@ -29,7 +29,9 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
-        extensions: mbstring, intl, imagick, swoole
+        extensions: mbstring, intl
+      env:
+        debug: true # specify true or false
 
     - name: Instalar dependências do Node.js
       run: npm install
