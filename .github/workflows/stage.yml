@@ -92,7 +92,7 @@ jobs:
       working-directory: ./form-contato
 
     - name: Trocar valor APP_NAME
-      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME="Formulario de Contato DEV"/g" .env
+      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME=\"Formulario de Contato DEV\"/g" .env
       working-directory: ./form-contato
 
 
