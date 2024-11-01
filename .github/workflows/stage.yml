@@ -89,6 +89,10 @@ jobs:
       run: php artisan storage:link
       working-directory: ./form-contato
 
+    - name: NPM RUN
+      run: npm run dev
+      working-directory: ./form-contato
+
 #    - name: Execute PHPUnit tests
 #      run: ./vendor/bin/phpunit
 #      working-directory: ./form-contato
