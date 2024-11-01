@@ -82,7 +82,7 @@ jobs:
         DB_PORT: 3306
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASS }}
-      run: php artisan migrate --seed
+      run: php artisan migrate
       working-directory: ./form-contato
 
     - name: Rodando Storage Link
