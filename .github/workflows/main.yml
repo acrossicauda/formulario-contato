@@ -6,9 +6,8 @@ on:
       - main
 
 jobs:
-  run_build:
+  build_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout código
       uses: actions/checkout@v2
@@ -68,9 +67,8 @@ jobs:
       working-directory: ./form-contato
 
     - name: Trocar valor APP_NAME
-      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME=\"Formulario de Contato DEV\"/g" .env
+      run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME=\"Formulario de Contato\"/g" .env
       working-directory: ./form-contato
-
 
     - name: Gerando KEY do LARAVEL
       run: php artisan key:generate
@@ -121,14 +119,11 @@ jobs:
       working-directory: ./form-contato
 
 
-    run_deploy:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.ftp_host_prd }}
-          username: ${{ secrets.ftp_user_prd }}
-          password: ${{ secrets.ftp_password_prd }}
-          server-dir: github/stage/
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.ftp_host_prd }}
+        username: ${{ secrets.ftp_user_prd }}
+        password: ${{ secrets.ftp_password_prd }}
+        server-dir: github/stage/
 
