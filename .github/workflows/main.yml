@@ -82,11 +82,15 @@ jobs:
         DB_PORT: 3306
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASS }}
-      run: php artisan migrate:fresh --seed
+      run: php artisan migrate --seed
       working-directory: ./form-contato
 
     - name: Rodando Storage Link
       run: php artisan storage:link
+      working-directory: ./form-contato
+
+    - name: NPM RUN
+      run: npm run prod
       working-directory: ./form-contato
 
       #    - name: Execute PHPUnit tests
