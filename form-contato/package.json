@@ -3,9 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "npm run development",
-        "development": "mix",
+        "development": "",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": " --production"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
