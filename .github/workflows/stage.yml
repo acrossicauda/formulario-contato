@@ -93,11 +93,15 @@ jobs:
       run: npm run dev
       working-directory: ./form-contato
 
+    - name: Building application
+      run: npm run build
+      working-directory: ./form-contato
+
 #    - name: Execute PHPUnit tests
 #      run: ./vendor/bin/phpunit
 #      working-directory: ./form-contato
 
-      # CONFIGURACAO EMAIL
+    # CONFIGURACAO EMAIL
     - name: Trocar valor MAIL_MAILER
       run: sed -i "s/MAIL_MAILER={MAIL_MAILER}/MAIL_MAILER=${{ secrets.MAIL_MAILER_DEV }}/g" .env
       working-directory: ./form-contato
