@@ -125,5 +125,6 @@ jobs:
         server: ${{ secrets.ftp_host_prd }}
         username: ${{ secrets.ftp_user_prd }}
         password: ${{ secrets.ftp_password_prd }}
-        server-dir: github/stage/
+        server-dir: github/main/
+      working-directory: ./form-contato
 
