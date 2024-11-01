@@ -6,9 +6,8 @@ on:
       - stage
 
 jobs:
-  run_build:
+  build_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout código
       uses: actions/checkout@v2
@@ -71,7 +70,6 @@ jobs:
       run: sed -i "s/APP_NAME={APP_NAME}/APP_NAME=\"Formulario de Contato DEV\"/g" .env
       working-directory: ./form-contato
 
-
     - name: Gerando KEY do LARAVEL
       run: php artisan key:generate
       working-directory: ./form-contato
@@ -91,11 +89,11 @@ jobs:
       run: php artisan storage:link
       working-directory: ./form-contato
 
-      #    - name: Execute PHPUnit tests
-      #      run: ./vendor/bin/phpunit
-      #      working-directory: ./form-contato
+#    - name: Execute PHPUnit tests
+#      run: ./vendor/bin/phpunit
+#      working-directory: ./form-contato
 
-    # CONFIGURACAO EMAIL
+      # CONFIGURACAO EMAIL
     - name: Trocar valor MAIL_MAILER
       run: sed -i "s/MAIL_MAILER={MAIL_MAILER}/MAIL_MAILER=${{ secrets.MAIL_MAILER_DEV }}/g" .env
       working-directory: ./form-contato
@@ -121,14 +119,11 @@ jobs:
       working-directory: ./form-contato
 
 
-  run_deploy:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.ftp_host_dev }}
-          username: ${{ secrets.ftp_user_dev }}
-          password: ${{ secrets.ftp_password_dev }}
-          server-dir: github/stage/
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.ftp_host_dev }}
+        username: ${{ secrets.ftp_user_dev }}
+        password: ${{ secrets.ftp_password_dev }}
+        server-dir: github/stage/
 
