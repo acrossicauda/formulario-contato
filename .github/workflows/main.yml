@@ -122,7 +122,8 @@ jobs:
 
 
   deploy:
-
+    build:
+      runs-on: ubuntu-latest
     steps:
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
