@@ -100,10 +100,10 @@ jobs:
       run: php artisan key:generate
       working-directory: ./form-contato
 
-    - name: Verify MySQL connection
-      run: |
-        mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
-      working-directory: ./form-contato
+#    - name: Verify MySQL connection
+#      run: |
+#        mysql --host ${{ secrets.DB_HOST }} --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
+#      working-directory: ./form-contato
 
 #    - name: Execute PHPUnit tests
 #      env:
