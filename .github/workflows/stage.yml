@@ -89,9 +89,9 @@ jobs:
       run: php artisan storage:link
       working-directory: ./form-contato
 
-    - name: NPM RUN
-      run: npm run dev
-      working-directory: ./form-contato
+#    - name: NPM RUN
+#      run: npm run dev
+#      working-directory: ./form-contato
 
     - name: Building application
       run: npm run build
