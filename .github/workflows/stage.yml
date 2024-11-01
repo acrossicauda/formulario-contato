@@ -93,9 +93,9 @@ jobs:
       run: npm run dev
       working-directory: ./form-contato
 
-#    - name: Building application
-#      run: npm run build
-#      working-directory: ./form-contato
+    - name: Building application
+      run: npm run build
+      working-directory: ./form-contato
 
 #    - name: Execute PHPUnit tests
 #      run: ./vendor/bin/phpunit
