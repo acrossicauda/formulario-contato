@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  run_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -121,15 +121,14 @@ jobs:
       working-directory: ./form-contato
 
 
-  deploy:
-    build:
+    run_deploy:
       runs-on: ubuntu-latest
-    steps:
-    - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.ftp_host_prd }}
-        username: ${{ secrets.ftp_user_prd }}
-        password: ${{ secrets.ftp_password_prd }}
-        server-dir: github/stage/
+      steps:
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.ftp_host_prd }}
+          username: ${{ secrets.ftp_user_prd }}
+          password: ${{ secrets.ftp_password_prd }}
+          server-dir: github/stage/
 
