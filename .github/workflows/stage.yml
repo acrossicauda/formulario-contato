@@ -9,30 +9,6 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
 
-#  services:
-#    mysql:
-#      image: mysql:5.7
-#      env:
-#        MYSQL_USER:
-#          MYSQL_PASSWORD: ${{ secrets.DB_PASS }}
-#          MYSQL_DATABASE: ${{ secrets.DB_DATABASE_DEV }}
-#          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASS }}
-#          DB_PORT: 3306
-#          ports:
-#            - 33306:3306
-
-#    run:
-#      runs-on: ${{ matrix.operating-system }}
-#      strategy:
-#        matrix:
-#          operating-system: [ 'ubuntu-22.04' ]
-#          php-versions: [ '8.1' ]
-#          phpunit-versions: [ 'latest' ]
-#          include:
-#            - operating-system: 'ubuntu-latest'
-#              php-versions: '8.1'
-#              phpunit-versions: 9
-
     steps:
     - name: Checkout código
       uses: actions/checkout@v2
@@ -63,7 +39,7 @@ jobs:
       working-directory: ./form-contato
 
 
-    - name: Do Something with env files
+    - name: Trocar valor DB_USER
       run: echo "DB_USERNAME=${{ secrets.DB_USER }}" >> .env
       working-directory: ./form-contato
 
@@ -129,7 +105,7 @@ jobs:
         DB_PORT: 3306
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASS }}
-      run: php artisan migrate
+      run: php artisan migrate:fresh --seed
       working-directory: ./form-contato
 
     - name: Rodando Storage Link
