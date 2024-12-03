@@ -6,19 +6,23 @@
             <h1 class="">Gostaria de fazer um orçamento ou agendar uma consultoria,
                 nos envie uma mensagem que logo entraremos em contato</h1>
         </div>
+
         <br>
         <div class="row dark:text-white">
             <label>Digite seu nome:</label>
             <input type="text" class="form-control" name="name" value="" placeholder="ex: João" required>
         </div>
+
         <div class="row dark:text-white">
             <label>Digite seu e-mail:</label>
             <input type="email" class="form-control" name="email" value="" placeholder="ex: joaoclb@gmail.com" required>
         </div>
+
         <div class="row dark:text-white">
             <label>Digite o assunto:</label>
             <input type="text" class="form-control" name="title" value="" placeholder="ex: orçamento" required>
         </div>
+
         <div class="row dark:text-white">
             <label>Digite sua mensagem:</label>
             <textarea class="form-control" name="description" value="" placeholder="Digite sua mensagem aqui" maxlength="1000" required></textarea>
