@@ -63,7 +63,7 @@ jobs:
       working-directory: ./form-contato
 
     - name: Trocar valor APP_DEBUG
-      run: sed -i "s/APP_DEBUG={APP_DEBUG}/APP_DEBUG=true/g" .env
+      run: sed -i "s/APP_DEBUG={APP_DEBUG}/APP_DEBUG=false/g" .env
       working-directory: ./form-contato
 
     - name: Trocar valor APP_NAME
@@ -82,7 +82,7 @@ jobs:
         DB_PORT: 3306
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASS }}
-      run: php artisan migrate --seed
+      run: php artisan migrate
       working-directory: ./form-contato
 
     - name: Rodando Storage Link
