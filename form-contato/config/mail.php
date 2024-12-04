@@ -108,7 +108,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'acrossicaudadev@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'contato@acrossicauda.com.br'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
