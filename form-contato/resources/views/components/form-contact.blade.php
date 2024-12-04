@@ -35,8 +35,8 @@
                 <div class="g-recaptcha" data-sitekey="{{ env('KEY_RECAPTCHA') }}"></div>
             @endif
 
-            <input class="btn btn-secondary mr-2" type="submit">
-            <button class="btn btn-danger" type="reset">Cancelar</button>
+            <input class="btn btn-secondary mr-2 text-black-for-light-theme" type="submit">
+            <button class="btn btn-danger text-black-for-light-theme" type="reset">Cancelar</button>
         </div>
     </form>
 </div>
