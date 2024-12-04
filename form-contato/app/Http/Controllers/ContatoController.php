@@ -32,7 +32,7 @@ class ContatoController extends Controller
         $titulo = $dados->title;
         $assunto = $dados->description;
         // O envio de emails é feito usando o método "to" na facade Mail
-        $mailTo = env('MAIL_TO_ADDRESS') ?? 'acrossicaudadev@gmail.com';
+        $mailTo = env('MAIL_TO_ADDRESS') ?? 'contato@acrossicauda.com.br';
         return Mail::to($mailTo)->send(new \App\Mail\SendMail($name, $email, $titulo, $assunto));
 
     }
